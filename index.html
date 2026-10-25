@@ -23,7 +23,7 @@ h1,h2{font-family:var(--head);line-height:1.15;margin:0}
 .brand{font:700 1.2rem var(--head);color:var(--accent);text-decoration:none}
 button,.btn{font:700 .95rem var(--body);cursor:pointer;border-radius:999px;border:1.5px solid var(--accent);background:transparent;color:var(--accent);padding:.4rem 1rem;text-decoration:none;display:inline-block;text-align:center}
 .btn.fill{background:var(--accent);color:var(--on)}
-button:focus-visible,.btn:focus-visible,select:focus-visible,a:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
+button:focus-visible,.btn:focus-visible,select:focus-visible,input:focus-visible,textarea:focus-visible,a:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
 .hero{background:var(--soft);padding:2.2rem 0 2.6rem}
 .hero .wrap{display:grid;gap:1.4rem;align-items:center}
 .hero h1{font-size:clamp(2.1rem,7vw,3.8rem)}
@@ -49,7 +49,7 @@ td b{color:var(--accent)}
 .note{margin:1rem 0 0;padding:.7rem 1rem;border-left:4px solid var(--accent);background:var(--soft);border-radius:0 10px 10px 0}
 .form{display:grid;gap:.9rem;max-width:560px}
 label{display:grid;gap:.25rem;font-weight:600}
-select,textarea{font:inherit;padding:.6rem .7rem;border-radius:12px;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);width:100%}
+select,textarea,input{font:inherit;padding:.6rem .7rem;border-radius:12px;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);width:100%}
 textarea{resize:none;font-size:.95rem}
 .total{font:700 1.6rem var(--head);color:var(--accent)}
 .k{color:var(--muted);font-size:.92rem}
@@ -59,6 +59,13 @@ textarea{resize:none;font-size:.95rem}
 footer{border-top:1px solid var(--line);padding:1.4rem 0 2rem;color:var(--muted);font-size:.92rem;text-align:center}
 @media(min-width:760px){.hero .wrap{grid-template-columns:1.3fr 1fr}.list{column-count:2}.cake{width:min(320px,100%)}.hero{padding:3.6rem 0 4rem}.chan{grid-template-columns:repeat(3,1fr)}}
 @media(prefers-reduced-motion:reduce){.flame{animation:none}}
+.two{display:grid;gap:1.2rem;align-items:start}
+.rules{display:grid;gap:.7rem}
+.rules ol{margin:0;padding-left:1.2rem}
+.rules li{padding:.15rem 0}
+.bk{font:700 1.5rem var(--head);color:var(--accent)}
+.maplink{color:var(--accent);font-weight:700}
+@media(min-width:760px){.two{grid-template-columns:1.2fr 1fr}}
 </style>
 </head>
 <body>
@@ -98,27 +105,49 @@ footer{border-top:1px solid var(--line);padding:1.4rem 0 2rem;color:var(--muted)
 </div></section>
 
 <section class="s" id="order" style="background:var(--soft)"><div class="wrap">
-<h2>Place an order</h2><p class="sub">Choose a cake and weight, then send your order by WhatsApp, SMS or Facebook.</p>
+<h2>Place an order</h2>
+<p class="sub">Fill in the form, then send it by WhatsApp, SMS or Messenger.</p>
+<div class="two">
 <div class="card form">
+<label>Your name<input id="fn" autocomplete="name"></label>
+<label>Phone number<input id="fp" type="tel" autocomplete="tel"></label>
 <label>Cake<select id="sc"></select></label>
 <label>Weight<select id="sl"></select></label>
+<label>Date needed<input id="fd" type="date"></label>
+<label>Pickup or delivery<select id="fm"><option>Pickup</option><option>Delivery</option></select></label>
+<label id="fw" style="display:none">Delivery address<input id="fa" autocomplete="street-address"></label>
+<label>Message or design on the cake<textarea id="fx" rows="2" placeholder="Example: Happy Birthday Rina"></textarea></label>
 <div class="pv"><div class="k">Estimated price</div><div class="total" id="tot"></div><div class="k">Customized design costs extra.</div></div>
-<label>Your order message<textarea id="msg" rows="2" readonly></textarea></label>
+<label>Your order message<textarea id="msg" rows="6" readonly></textarea></label>
 <div class="chan">
 <a class="btn fill" id="wa" target="_blank" rel="noopener">WhatsApp</a>
 <a class="btn fill" id="sms">SMS</a>
-<a class="btn fill" href="https://www.facebook.com/share/1E7NcmtsQM/" target="_blank" rel="noopener">Facebook</a>
+<a class="btn fill" id="ms" href="https://m.me/irin.akter.570933" target="_blank" rel="noopener">Messenger</a>
 </div>
-<button type="button" id="cp">Copy message for Imo or Messenger</button>
+<button type="button" id="cp">Copy message (for Imo or Messenger)</button>
 <div class="k" id="cpn" aria-live="polite"></div>
-</div></div></section>
+</div>
+<div class="card rules">
+<h2 style="font-size:1.4rem">How ordering works</h2>
+<ol>
+<li>Send your order using the form.</li>
+<li>Pay the advance by bKash to confirm your order.</li>
+<li>We confirm your order by message.</li>
+</ol>
+<div><div class="k">bKash number</div><div class="bk">01831000368</div></div>
+<button type="button" id="bk">Copy bKash number</button>
+<div class="k" id="bkn" aria-live="polite"></div>
+<p class="note" style="margin:0">An order is confirmed only after the advance payment. Extra charge applies for customized designs.</p>
+</div>
+</div>
+</div></section>
 
 <section class="s" id="find"><div class="wrap">
 <h2>Contact us</h2>
 <div class="card" style="margin-top:1rem">
-<p style="margin:0 0 .8rem"><span class="k">Phone, WhatsApp and Imo</span><br><b>+8801831000368</b></p>
-<div class="acts" style="margin-bottom:1rem"><a class="btn" href="tel:+8801831000368">Call</a><a class="btn" href="sms:+8801831000368">SMS</a><a class="btn" href="https://wa.me/8801831000368" target="_blank" rel="noopener">WhatsApp</a><a class="btn" href="https://www.facebook.com/share/1E7NcmtsQM/" target="_blank" rel="noopener">Facebook page</a></div>
-<p style="margin:0"><span class="k">Address</span><br>Royan, Nagari, Kaliganj, Gazipur, Bangladesh</p>
+<p style="margin:0 0 .8rem"><span class="k">Phone, WhatsApp, Imo and bKash</span><br><b>+8801831000368</b></p>
+<div class="acts" style="margin-bottom:1rem"><a class="btn" href="tel:+8801831000368">Call</a><a class="btn" href="sms:+8801831000368">SMS</a><a class="btn" href="https://wa.me/8801831000368" target="_blank" rel="noopener">WhatsApp</a><a class="btn" href="https://m.me/irin.akter.570933" target="_blank" rel="noopener">Messenger</a><a class="btn" href="https://www.facebook.com/share/1E7NcmtsQM/" target="_blank" rel="noopener">Facebook page</a></div>
+<p style="margin:0"><span class="k">Address (tap to open in maps)</span><br><a class="maplink" id="map" target="_blank" rel="noopener">Nagari, Kaliganj, Gazipur</a></p>
 </div></div></section>
 </main>
 <footer><div class="wrap">Demo website for Irin Yuammy Cake House</div></footer>
@@ -139,16 +168,31 @@ $("jars").innerHTML=JR.map(li).join("");
 $("tubs").innerHTML=TB.map(function(r){return"<tr><td>"+r[0]+"</td>"+r[1].map(function(v){return"<td><b>"+p(v)+"</b></td>"}).join("")+"</tr>"}).join("");
 $("sc").innerHTML=CK.map(function(c,i){return"<option value="+i+">"+c[0]+"</option>"}).join("");
 $("sl").innerHTML=[1,2,3,4,5].map(function(x){return"<option value="+x+">"+x+" pound"+(x>1?"s":"")+"</option>"}).join("");
+var t=new Date();$("fd").min=t.getFullYear()+"-"+("0"+(t.getMonth()+1)).slice(-2)+"-"+("0"+t.getDate()).slice(-2);
 function calc(){
-var c=CK[$("sc").value],q=+$("sl").value;
-var m="Hello! I’d like to order: "+c[0]+", "+q+" pound"+(q>1?"s":"")+".";
+var c=CK[$("sc").value],q=+$("sl").value,del=$("fm").value==="Delivery",L=["Hello! I’d like to order a cake."];
+function add(k,v){if(v&&v.trim())L.push(k+": "+v.trim())}
+$("fw").style.display=del?"grid":"none";
+add("Name",$("fn").value);add("Phone",$("fp").value);
+L.push("Cake: "+c[0]+", "+q+" pound"+(q>1?"s":""));
+add("Date needed",$("fd").value);L.push("Pickup or delivery: "+$("fm").value);
+if(del)add("Address",$("fa").value);
+add("Message on cake",$("fx").value);
+L.push("I will pay the advance by bKash to confirm.");
+var m=L.join("\n");
 $("tot").textContent=p(c[1]*q);$("msg").value=m;
 $("wa").href="https://wa.me/"+PH+"?text="+encodeURIComponent(m);
 $("sms").href="sms:+"+PH+"?body="+encodeURIComponent(m);
 }
-$("sc").onchange=calc;$("sl").onchange=calc;calc();
-$("cp").onclick=function(){var m=$("msg");m.select();var ok=false;try{ok=navigator.clipboard.writeText(m.value)||true}catch(e){try{ok=document.execCommand("copy")}catch(x){}}
-$("cpn").textContent=ok?"Message copied. Paste it in Imo or Messenger.":"Select the message above and copy it."};
+["fn","fp","fd","fm","fa","fx","sc","sl"].forEach(function(i){$(i).addEventListener("input",calc);$(i).addEventListener("change",calc)});
+calc();
+function copy(tx,ok,note){var d=false;try{navigator.clipboard.writeText(tx).catch(function(){});d=true}catch(e){var x=document.createElement("textarea");x.value=tx;document.body.appendChild(x);x.select();try{d=document.execCommand("copy")}catch(e2){}document.body.removeChild(x)}
+$(note).textContent=d?ok:"Please select the text and copy it."}
+$("cp").onclick=function(){copy($("msg").value,"Message copied. Paste it in Imo or Messenger.","cpn")};
+$("ms").addEventListener("click",function(){copy($("msg").value,"Message copied. Paste it in Messenger.","cpn")});
+$("bk").onclick=function(){copy("01831000368","bKash number copied.","bkn")};
+var q=encodeURIComponent("Nagari, Kaliganj, Gazipur, Bangladesh");
+$("map").href=/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)?"https://maps.apple.com/?q="+q:"https://www.google.com/maps/search/?api=1&query="+q;
 $("pb").onclick=function(){var s=document.body.classList.toggle("show");$("pb").textContent=s?"Hide price list":"See price list";if(s)$("menu").scrollIntoView({behavior:"smooth"})};
 $("theme").onclick=function(){theme=isDark()?"light":"dark";try{localStorage.setItem("theme",theme)}catch(e){}setTheme()};
 document.querySelectorAll("[data-go]").forEach(function(a){a.onclick=function(e){e.preventDefault();(a.dataset.go==="top"?document.body:$(a.dataset.go)).scrollIntoView({behavior:"smooth"})}});
