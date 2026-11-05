@@ -66,6 +66,7 @@ footer{border-top:1px solid var(--line);padding:1.4rem 0 2rem;color:var(--muted)
 .bk{font:700 1.5rem var(--head);color:var(--accent)}
 .maplink{color:var(--accent);font-weight:700}
 @media(min-width:760px){.two{grid-template-columns:1.2fr 1fr}}
+.err{color:var(--accent);font-weight:700}
 </style>
 </head>
 <body>
@@ -106,21 +107,24 @@ footer{border-top:1px solid var(--line);padding:1.4rem 0 2rem;color:var(--muted)
 
 <section class="s ov" id="order" style="background:var(--soft)"><div class="wrap">
 <h2>Place an order</h2>
-<p class="sub">Fill in the form, then send it by WhatsApp, SMS or Messenger.</p>
+<p class="sub">Fill in the form, then send it by WhatsApp, SMS or Messenger. Fields marked * are required.</p>
 <div class="two">
 <div class="card form">
-<label>Your name<input id="fn" autocomplete="name"></label>
-<label>Phone number<input id="fp" type="tel" autocomplete="tel"></label>
-<label>Cake<select id="sc"></select></label>
-<label>Weight<input id="sl" inputmode="decimal" placeholder="Example: 2 pounds"></label>
-<label>Date needed<input id="fd" type="date"></label>
-<label>Message or design on the cake<textarea id="fx" rows="2" placeholder="Example: Happy Birthday Rina"></textarea></label>
-<div class="pv"><div class="k">Estimated price</div><div class="total" id="tot"></div><div class="k">Customized design costs extra.</div></div>
+<label>Your name (optional)<input id="fn" autocomplete="name"></label>
+<label>Phone number *<input id="fp" type="tel" autocomplete="tel" inputmode="tel" required></label>
+<label>Cake *<select id="sc" required></select></label>
+<label id="wl" style="display:none">Weight in pounds *<input id="sl" inputmode="decimal" placeholder="Example: 2"></label>
+<label id="zl" style="display:none">Size *<select id="sz"><option value="">Choose size</option><option value="0">250 ml</option><option value="1">500 ml</option><option value="2">1000 ml</option></select></label>
+<label id="ql" style="display:none"><span id="qt">Number of boxes *</span><input id="sq" inputmode="numeric" placeholder="Example: 2"></label>
+<label>Date needed (optional)<input id="fd" type="date"></label>
+<label>Message or design on the cake (optional)<textarea id="fx" rows="2" placeholder="Example: Happy Birthday Rina"></textarea></label>
+<div><div class="k">Estimated price</div><div class="total" id="tot"></div><div class="k">Customized design costs extra.</div></div>
 <label>Your order message<textarea id="msg" rows="6" readonly></textarea></label>
+<div class="err" id="err" role="alert"></div>
 <div class="chan">
 <a class="btn fill" id="wa" target="_blank" rel="noopener">WhatsApp</a>
 <a class="btn fill" id="sms">SMS</a>
-<a class="btn fill" id="ms" href="https://m.me/irin.akter.570933" target="_blank" rel="noopener">Messenger</a>
+<a class="btn fill" id="ms" href="https://m.me/irin.yummy.cake.house" target="_blank" rel="noopener">Messenger</a>
 </div>
 <button type="button" id="cp">Copy message (for Imo or Messenger)</button>
 <div class="k" id="cpn" aria-live="polite"></div>
@@ -144,16 +148,17 @@ footer{border-top:1px solid var(--line);padding:1.4rem 0 2rem;color:var(--muted)
 <h2>Contact us</h2>
 <div class="card" style="margin-top:1rem">
 <p style="margin:0 0 .8rem"><span class="k">Phone, WhatsApp, Imo and bKash</span><br><b>+8801831000368</b></p>
-<div class="acts" style="margin-bottom:1rem"><a class="btn" href="tel:+8801831000368">Call</a><a class="btn" href="sms:+8801831000368">SMS</a><a class="btn" href="https://wa.me/8801831000368" target="_blank" rel="noopener">WhatsApp</a><a class="btn" href="https://m.me/irin.akter.570933" target="_blank" rel="noopener">Messenger</a><a class="btn" href="https://www.facebook.com/share/1E7NcmtsQM/" target="_blank" rel="noopener">Facebook page</a></div>
+<div class="acts" style="margin-bottom:1rem"><a class="btn" href="tel:+8801831000368">Call</a><a class="btn" href="sms:+8801831000368">SMS</a><a class="btn" href="https://wa.me/8801831000368" target="_blank" rel="noopener">WhatsApp</a><a class="btn" href="https://m.me/irin.yummy.cake.house" target="_blank" rel="noopener">Messenger</a><a class="btn" href="https://www.facebook.com/share/1E7NcmtsQM/" target="_blank" rel="noopener">Facebook page</a></div>
 <p style="margin:0"><span class="k">Address</span><br>Nagari, Kaliganj, Gazipur</p>
 </div></div></section>
 </main>
 
 <script>
 var PH="8801831000368";
-var CK=[["Vanilla Cake",600],["Chocolate Cake",800],["Rich Chocolate Cake",1000],["Rich Vanilla Cake",1000],["Lemon Cake",800],["Orange Cake",1000],["Strawberry Cake",1000],["Mango Cake",1000],["Black Forest Cake",1000],["White Forest Cake",1000],["Mocha Cake",1000],["Vanilla Moist Cake",1000],["Chocolate Moist Cake",1000],["Roshmalai Cake",1000],["Butterscotch Cake",1000],["Blue Berry Cake",1000],["Red Velvet Cake",1200],["Authentic Red Velvet Cake",1500],["Mud Cake",1500]];
+var CK=[["Vanilla Cake",600],["Chocolate Cake",800],["Rich Chocolate Cake",1000],["Rich Vanilla Cake",1000],["Lemon Cake",800],["Orange Cake",1000],["Strawberry Cake",1000],["Mango Cake",1000],["Black Forest Cake",1000],["White Forest Cake",1000],["Mocha Cake",1000],["Vanilla Moist Cake",1000],["Chocolate Moist Cake",1000],["Roshmalai Cake",1200],["Butterscotch Cake",1000],["Blue Berry Cake",1000],["Red Velvet Cake",1200],["Authentic Red Velvet Cake",1500],["Mud Cake",1500]];
 var JR=[["Jar Cake",150],["Special Jar Cake",200]];
 var TB=[["Vanilla",[180,350,650]],["Chocolate",[200,400,750]],["Orange, Mango, Lemon",[180,350,700]]];
+var SZ=["250 ml","500 ml","1000 ml"];
 var $=function(i){return document.getElementById(i)},theme=null;
 try{theme=localStorage.getItem("theme")}catch(e){}
 function p(x){return x+"৳"}
@@ -163,26 +168,57 @@ function setTheme(){if(theme)document.documentElement.setAttribute("data-theme",
 $("cakes").innerHTML=CK.map(li).join("");
 $("jars").innerHTML=JR.map(li).join("");
 $("tubs").innerHTML=TB.map(function(r){return"<tr><td>"+r[0]+"</td>"+r[1].map(function(v){return"<td><b>"+p(v)+"</b></td>"}).join("")+"</tr>"}).join("");
-$("sc").innerHTML=CK.map(function(c,i){return"<option value="+i+">"+c[0]+"</option>"}).join("");
+var IT=[];
+CK.forEach(function(x){IT.push([x[0],x[1],"pound"])});var a=IT.length;
+JR.forEach(function(x){IT.push([x[0],x[1],"jar"])});var b=IT.length;
+TB.forEach(function(r){r[0].split(", ").forEach(function(fl){IT.push([fl+" Tub Cake",r[1],"tub"])})});
+function grp(l,x,y){var h='<optgroup label="'+l+'">';for(var i=x;i<y;i++)h+='<option value="'+i+'">'+IT[i][0]+"</option>";return h+"</optgroup>"}
+$("sc").innerHTML='<option value="">Choose a cake</option>'+grp("Cakes (by the pound)",0,a)+grp("Jar cakes",a,b)+grp("Tub cakes",b,IT.length);
 var t=new Date();$("fd").min=t.getFullYear()+"-"+("0"+(t.getMonth()+1)).slice(-2)+"-"+("0"+t.getDate()).slice(-2);
+function bn(v){return v.replace(/[০-৯]/g,function(d){return"০১২৩৪৫৬৭৮৯".indexOf(d)})}
+function num(v){var x=parseFloat(bn(v).replace(/[^\d.]/g,""));return x>0?x:0}
+function st(){var c=IT[$("sc").value];return{c:c,ty:c?c[2]:"",pn:num($("sl").value),qn:Math.floor(num($("sq").value)),sz:$("sz").value}}
 function calc(){
-var c=CK[$("sc").value],w=$("sl").value.trim(),n=parseFloat(w.replace(/[০-৯]/g,function(d){return"০১২৩৪৫৬৭৮৯".indexOf(d)}).replace(/[^\d.]/g,"")),L=["Hello! I’d like to order a cake."];
+var o=st(),c=o.c,ty=o.ty,L=["Hello! I’d like to order a cake."],est=0,ln="";
+$("wl").style.display=ty==="pound"?"grid":"none";
+$("zl").style.display=ty==="tub"?"grid":"none";
+$("ql").style.display=ty==="tub"||ty==="jar"?"grid":"none";
+$("qt").textContent=ty==="tub"?"Number of boxes *":"Number of pieces *";
 function add(k,v){if(v&&v.trim())L.push(k+": "+v.trim())}
 add("Name",$("fn").value);add("Phone",$("fp").value);
-L.push("Cake: "+c[0]+(w?", "+w:""));
-add("Date needed",$("fd").value);add("Message on cake",$("fx").value);
+if(ty==="pound"){ln=c[0];if(o.pn>0){ln+=", "+o.pn+" pound"+(o.pn===1?"":"s");est=c[1]*o.pn}}
+if(ty==="tub"){ln=c[0];if(o.sz!=="")ln+=", "+SZ[o.sz];if(o.qn>0)ln+=", "+o.qn+" box"+(o.qn===1?"":"es");if(o.sz!==""&&o.qn>0)est=c[1][+o.sz]*o.qn}
+if(ty==="jar"){ln=c[0];if(o.qn>0){ln+=", "+o.qn+" piece"+(o.qn===1?"":"s");est=c[1]*o.qn}}
+if(c)L.push("Cake: "+ln);
+add("Date needed",$("fd").value);
+add("Message on cake",$("fx").value);
+var e=est>0?p(Math.round(est)):"";
+if(e)L.push("Estimated price: "+e+" (customized design costs extra)");
 L.push("I will pay the advance by bKash to confirm.");
 var m=L.join("\n");
-$("tot").textContent=n>0?p(Math.round(c[1]*n)):"";$("msg").value=m;
+$("tot").textContent=e||"—";$("msg").value=m;
 $("wa").href="https://wa.me/"+PH+"?text="+encodeURIComponent(m);
 $("sms").href="sms:+"+PH+"?body="+encodeURIComponent(m);
 }
-["fn","fp","fd","fx","sc","sl"].forEach(function(i){$(i).addEventListener("input",calc);$(i).addEventListener("change",calc)});
+["fn","fp","fd","fx","sc","sl","sz","sq"].forEach(function(i){$(i).addEventListener("input",calc);$(i).addEventListener("change",calc)});
 calc();
+function check(){
+calc();
+var o=st(),e="",f="";
+if(bn($("fp").value).replace(/\D/g,"").length<10){e="Please enter your phone number.";f="fp"}
+else if(!o.c){e="Please choose a cake.";f="sc"}
+else if(o.ty==="pound"&&!(o.pn>0)){e="Please enter the weight in pounds, for example 2.";f="sl"}
+else if(o.ty==="tub"&&o.sz===""){e="Please choose a size.";f="sz"}
+else if(o.ty==="tub"&&o.qn<1){e="Please enter the number of boxes.";f="sq"}
+else if(o.ty==="jar"&&o.qn<1){e="Please enter the number of pieces.";f="sq"}
+$("err").textContent=e;
+if(f)$(f).focus();
+return!e}
 function copy(tx,ok,note){var d=false;try{navigator.clipboard.writeText(tx).catch(function(){});d=true}catch(e){var x=document.createElement("textarea");x.value=tx;document.body.appendChild(x);x.select();try{d=document.execCommand("copy")}catch(e2){}document.body.removeChild(x)}
 $(note).textContent=d?ok:"Please select the text and copy it."}
-$("cp").onclick=function(){copy($("msg").value,"Message copied. Paste it in Imo or Messenger.","cpn")};
-$("ms").addEventListener("click",function(){copy($("msg").value,"Message copied. Paste it in Messenger.","cpn")});
+["wa","sms"].forEach(function(i){$(i).addEventListener("click",function(e){if(!check())e.preventDefault()})});
+$("ms").addEventListener("click",function(e){if(check())copy($("msg").value,"Message copied. Paste it in Messenger.","cpn");else e.preventDefault()});
+$("cp").onclick=function(){if(check())copy($("msg").value,"Message copied. Paste it in Imo or Messenger.","cpn")};
 $("bk").onclick=function(){copy("01831000368","bKash number copied.","bkn")};
 $("on").onclick=function(e){e.preventDefault();document.body.classList.add("ordering");$("order").scrollIntoView({behavior:"smooth"})};
 $("pb").onclick=function(){var s=document.body.classList.toggle("show");$("pb").textContent=s?"Hide price list":"See price list";if(s)$("menu").scrollIntoView({behavior:"smooth"})};
