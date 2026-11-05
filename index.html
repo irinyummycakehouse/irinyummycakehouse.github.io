@@ -67,6 +67,11 @@ footer{border-top:1px solid var(--line);padding:1.4rem 0 2rem;color:var(--muted)
 .maplink{color:var(--accent);font-weight:700}
 @media(min-width:760px){.two{grid-template-columns:1.2fr 1fr}}
 .err{color:var(--accent);font-weight:700}
+.f{display:grid;gap:.25rem;font-weight:600}
+.dt{display:grid;grid-template-columns:1.7fr 1fr 1.1fr;gap:.5rem}
+.mw{position:relative}
+.mw textarea{padding-bottom:2.6rem}
+.cpb{position:absolute;right:.5rem;bottom:.5rem;padding:.2rem .8rem;font-size:.85rem;background:var(--surface)}
 </style>
 </head>
 <body>
@@ -116,17 +121,18 @@ footer{border-top:1px solid var(--line);padding:1.4rem 0 2rem;color:var(--muted)
 <label id="wl" style="display:none">Weight in pounds *<input id="sl" inputmode="decimal" placeholder="Example: 2"></label>
 <label id="zl" style="display:none">Size *<select id="sz"><option value="">Choose size</option><option value="0">250 ml</option><option value="1">500 ml</option><option value="2">1000 ml</option></select></label>
 <label id="ql" style="display:none"><span id="qt">Number of boxes *</span><input id="sq" inputmode="numeric" placeholder="Example: 2"></label>
-<label>Date needed (optional)<input id="fd" type="date"></label>
+<div class="f">Date needed (optional)<div class="dt"><select id="dm" aria-label="Month"></select><select id="dd" aria-label="Day"></select><select id="dy" aria-label="Year"></select></div></div>
 <label>Message or design on the cake (optional)<textarea id="fx" rows="2" placeholder="Example: Happy Birthday Rina"></textarea></label>
 <div><div class="k">Estimated price</div><div class="total" id="tot"></div><div class="k">Customized design costs extra.</div></div>
-<label>Your order message<textarea id="msg" rows="6" readonly></textarea></label>
+<div class="f">Your order message<div class="mw"><textarea id="msg" rows="6" readonly></textarea><button type="button" id="cp" class="cpb">Copy</button></div></div>
 <div class="err" id="err" role="alert"></div>
 <div class="chan">
 <a class="btn fill" id="wa" target="_blank" rel="noopener">WhatsApp</a>
-<a class="btn fill" id="sms">SMS</a>
 <a class="btn fill" id="ms" href="https://m.me/irin.yummy.cake.house" target="_blank" rel="noopener">Messenger</a>
+<button type="button" class="btn fill" id="im">Imo</button>
+<a class="btn fill" id="sms">SMS</a>
+<a class="btn fill" href="tel:+8801831000368">Call</a>
 </div>
-<button type="button" id="cp">Copy message (for Imo or Messenger)</button>
 <div class="k" id="cpn" aria-live="polite"></div>
 </div>
 <div class="card rules">
@@ -174,9 +180,14 @@ JR.forEach(function(x){IT.push([x[0],x[1],"jar"])});var b=IT.length;
 TB.forEach(function(r){r[0].split(", ").forEach(function(fl){IT.push([fl+" Tub Cake",r[1],"tub"])})});
 function grp(l,x,y){var h='<optgroup label="'+l+'">';for(var i=x;i<y;i++)h+='<option value="'+i+'">'+IT[i][0]+"</option>";return h+"</optgroup>"}
 $("sc").innerHTML='<option value="">Choose a cake</option>'+grp("Cakes (by the pound)",0,a)+grp("Jar cakes",a,b)+grp("Tub cakes",b,IT.length);
-var t=new Date();$("fd").min=t.getFullYear()+"-"+("0"+(t.getMonth()+1)).slice(-2)+"-"+("0"+t.getDate()).slice(-2);
 function bn(v){return v.replace(/[০-৯]/g,function(d){return"০১২৩৪৫৬৭৮৯".indexOf(d)})}
 function num(v){var x=parseFloat(bn(v).replace(/[^\d.]/g,""));return x>0?x:0}
+var MN=["January","February","March","April","May","June","July","August","September","October","November","December"];
+(function(){var y=new Date().getFullYear(),h='<option value="">Month</option>';MN.forEach(function(m,i){h+='<option value="'+i+'">'+m+"</option>"});$("dm").innerHTML=h;$("dy").innerHTML='<option value="">Year</option><option>'+y+"</option><option>"+(y+1)+"</option>"})();
+function days(){var m=$("dm").value,y=$("dy").value,mx=m===""?31:new Date(y||2028,+m+1,0).getDate(),cur=$("dd").value,h='<option value="">Day</option>';for(var i=1;i<=mx;i++)h+="<option>"+i+"</option>";$("dd").innerHTML=h;if(cur&&+cur<=mx)$("dd").value=cur}
+days();
+function dtx(){var m=$("dm").value,d=$("dd").value,y=$("dy").value;return m!==""&&d&&y?MN[m]+" "+("0"+d).slice(-2)+", "+y:""}
+function dterr(){var m=$("dm").value,d=$("dd").value,y=$("dy").value;if(m===""&&!d&&!y)return"";if(m===""||!d||!y)return"Please choose the month, day and year, or leave the date empty.";var x=new Date(y,m,d),n=new Date();n.setHours(0,0,0,0);return x<n?"Please choose a date from today onwards.":""}
 function st(){var c=IT[$("sc").value];return{c:c,ty:c?c[2]:"",pn:num($("sl").value),qn:Math.floor(num($("sq").value)),sz:$("sz").value}}
 function calc(){
 var o=st(),c=o.c,ty=o.ty,L=["Hello! I’d like to order a cake."],est=0,ln="";
@@ -190,7 +201,7 @@ if(ty==="pound"){ln=c[0];if(o.pn>0){ln+=", "+o.pn+" pound"+(o.pn===1?"":"s");est
 if(ty==="tub"){ln=c[0];if(o.sz!=="")ln+=", "+SZ[o.sz];if(o.qn>0)ln+=", "+o.qn+" box"+(o.qn===1?"":"es");if(o.sz!==""&&o.qn>0)est=c[1][+o.sz]*o.qn}
 if(ty==="jar"){ln=c[0];if(o.qn>0){ln+=", "+o.qn+" piece"+(o.qn===1?"":"s");est=c[1]*o.qn}}
 if(c)L.push("Cake: "+ln);
-add("Date needed",$("fd").value);
+add("Date needed",dtx());
 add("Message on cake",$("fx").value);
 var e=est>0?p(Math.round(est)):"";
 if(e)L.push("Estimated price: "+e+" (customized design costs extra)");
@@ -200,7 +211,8 @@ $("tot").textContent=e||"—";$("msg").value=m;
 $("wa").href="https://wa.me/"+PH+"?text="+encodeURIComponent(m);
 $("sms").href="sms:+"+PH+"?body="+encodeURIComponent(m);
 }
-["fn","fp","fd","fx","sc","sl","sz","sq"].forEach(function(i){$(i).addEventListener("input",calc);$(i).addEventListener("change",calc)});
+["dm","dy"].forEach(function(i){$(i).addEventListener("change",days)});
+["fn","fp","dm","dd","dy","fx","sc","sl","sz","sq"].forEach(function(i){$(i).addEventListener("input",calc);$(i).addEventListener("change",calc)});
 calc();
 function check(){
 calc();
@@ -211,6 +223,7 @@ else if(o.ty==="pound"&&!(o.pn>0)){e="Please enter the weight in pounds, for exa
 else if(o.ty==="tub"&&o.sz===""){e="Please choose a size.";f="sz"}
 else if(o.ty==="tub"&&o.qn<1){e="Please enter the number of boxes.";f="sq"}
 else if(o.ty==="jar"&&o.qn<1){e="Please enter the number of pieces.";f="sq"}
+else if(dterr()){e=dterr();f="dm"}
 $("err").textContent=e;
 if(f)$(f).focus();
 return!e}
@@ -218,7 +231,8 @@ function copy(tx,ok,note){var d=false;try{navigator.clipboard.writeText(tx).catc
 $(note).textContent=d?ok:"Please select the text and copy it."}
 ["wa","sms"].forEach(function(i){$(i).addEventListener("click",function(e){if(!check())e.preventDefault()})});
 $("ms").addEventListener("click",function(e){if(check())copy($("msg").value,"Message copied. Paste it in Messenger.","cpn");else e.preventDefault()});
-$("cp").onclick=function(){if(check())copy($("msg").value,"Message copied. Paste it in Imo or Messenger.","cpn")};
+$("cp").onclick=function(){copy($("msg").value,"Message copied.","cpn")};
+$("im").onclick=function(){if(check())copy($("msg").value,"Message copied. Open Imo and send it to 01831000368.","cpn")};
 $("bk").onclick=function(){copy("01831000368","bKash number copied.","bkn")};
 $("on").onclick=function(e){e.preventDefault();document.body.classList.add("ordering");$("order").scrollIntoView({behavior:"smooth"})};
 $("pb").onclick=function(){var s=document.body.classList.toggle("show");$("pb").textContent=s?"Hide price list":"See price list";if(s)$("menu").scrollIntoView({behavior:"smooth"})};
